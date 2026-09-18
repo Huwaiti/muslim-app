@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>مسلم | رفيقك الإيماني</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -164,5 +165,6 @@
   </div>
 </div>
 <script src="script.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js");}</script>
 </body>
 </html>
