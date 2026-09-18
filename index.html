@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>مسلم | رفيقك الإيماني</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app" id="app">
+  
+  <div class="top-bar">
+    <div class="top-icon" onclick="go('profileView')">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <span class="badge" id="locBadge">جاري التحديد...</span>
+    <div class="top-icon" onclick="go('settingsView')">
+      <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    </div>
+  </div>
+
+  <div id="homeView" class="view active">
+    <div class="hero">
+      <div class="hero-label">الصلاة القادمة</div>
+      <div class="prayer-title" id="nextP">--</div>
+      <div class="timer" id="timer">--:--:--</div>
+    </div>
+    <div class="dates-row">
+      <div class="date-card"><span class="date-label">ميلادي</span><span class="date-val" id="gregDate">--</span></div>
+      <div class="date-card"><span class="date-label">هجري</span><span class="date-val" id="hijriDate">--</span></div>
+    </div>
+    <div class="grid">
+      <div class="p-item" id="p-Fajr"><span>الفجر</span><span class="t">--:--</span></div>
+      <div class="p-item" id="p-Sunrise"><span>الشروق</span><span class="t">--:--</span></div>
+      <div class="p-item" id="p-Dhuhr"><span>الظهر</span><span class="t">--:--</span></div>
+      <div class="p-item" id="p-Asr"><span>العصر</span><span class="t">--:--</span></div>
+      <div class="p-item" id="p-Maghrib"><span>المغرب</span><span class="t">--:--</span></div>
+      <div class="p-item" id="p-Isha"><span>العشاء</span><span class="t">--:--</span></div>
+    </div>
+  </div>
+
+  <div id="azkarView" class="view">
+    <div class="tabs">
+      <button class="tab active" onclick="loadAzkar('sabah',event)">أذكار الصباح</button>
+      <button class="tab" onclick="loadAzkar('misaa',event)">أذكار المساء</button>
+    </div>
+    <div id="azkarList"></div>
+  </div>
+
+  <div id="tasbihView" class="view">
+    <div class="tasbih-wrap">
+      <div class="tasbih-circle" id="tasbihBtn" onclick="incTasbih()">0</div>
+      <button class="btn-reset" onclick="resetTasbih()">إعادة الضبط</button>
+    </div>
+  </div>
+
+  <div id="qiblaView" class="view">
+    <div class="qibla-wrap">
+      <h2 class="page-title">اتجاه القبلة</h2>
+      <div class="compass">
+        <div class="compass-ring"></div>
+        <div class="needle" id="needle">⬆️</div>
+      </div>
+      <div class="q-deg" id="qDeg">جاري الحساب...</div>
+    </div>
+  </div>
+
+  <div id="quranView" class="view">
+    <div id="surahList"></div>
+    <div id="surahContent"></div>
+  </div>
+
+  <div id="profileView" class="view">
+    <div class="profile-head">
+      <div class="avatar">م</div>
+      <h2 id="pName">مستخدم مسلم</h2>
+      <p class="subtext">user@muslim.app</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="sTasbih">0</div><div class="stat-l">تسبيحة</div></div>
+      <div class="stat"><div class="stat-n" id="sAzkar">0</div><div class="stat-l">ذكر</div></div>
+      <div class="stat"><div class="stat-n" id="sPrayers">0</div><div class="stat-l">صلاة</div></div>
+    </div>
+    <button class="logout" onclick="logout()">تسجيل الخروج</button>
+  </div>
+
+  <div id="settingsView" class="view">
+    <h2 class="page-title">الإعدادات</h2>
+    
+    <div class="s-section">
+      <h3>📍 الموقع</h3>
+      <div class="input-g"><label>الدولة</label>
+        <select id="countrySel">
+          <option value="Saudi Arabia">السعودية</option>
+          <option value="Egypt">مصر</option>
+          <option value="United Arab Emirates">الإمارات</option>
+          <option value="Kuwait">الكويت</option>
+          <option value="Qatar">قطر</option>
+          <option value="Jordan">الأردن</option>
+          <option value="Algeria">الجزائر</option>
+          <option value="Morocco">المغرب</option>
+          <option value="Tunisia">تونس</option>
+          <option value="Iraq">العراق</option>
+          <option value="Palestine">فلسطين</option>
+          <option value="Turkey">تركيا</option>
+          <option value="United Kingdom">بريطانيا</option>
+          <option value="United States">أمريكا</option>
+        </select>
+      </div>
+      <div class="input-g"><label>المدينة</label><input type="text" id="cityIn" placeholder="Cairo"></div>
+      <button class="btn-save" onclick="saveLoc()">حفظ الموقع</button>
+    </div>
+
+    <div class="s-section">
+      <h3>🔊 صوت الأذان</h3>
+      <div class="input-g">
+        <select id="adhanSel">
+          <option value="makkah">أذان الحرم المكي</option>
+          <option value="madinah">أذان الحرم النبوي</option>
+          <option value="aqsa">أذان المسجد الأقصى</option>
+          <option value="egypt">أذان مصري</option>
+          <option value="fajr">أذان الفجر (هادئ)</option>
+        </select>
+      </div>
+      <div class="btn-row">
+        <button class="btn-save" onclick="testAdhan()">🎧 تجربة</button>
+        <button class="btn-reset" onclick="stopAdhan()">⏹ إيقاف</button>
+      </div>
+    </div>
+
+    <div class="s-section">
+      <h3>🎛️ التفضيلات</h3>
+      <div class="toggle-row">
+        <span>الوضع الليلي</span>
+        <label class="switch"><input type="checkbox" id="darkToggle" onchange="toggleDark(this.checked)"><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <span>الألوان الديناميكية</span>
+        <label class="switch"><input type="checkbox" id="dynThemeToggle" checked onchange="toggleDynTheme(this.checked)"><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <span>الاهتزاز</span>
+        <label class="switch"><input type="checkbox" id="vibToggle" checked><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <span>إشعارات الصلاة</span>
+        <label class="switch"><input type="checkbox" id="notifToggle" onchange="requestNotif(this.checked)"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="s-section">
+      <h3>ℹ️ عن التطبيق</h3>
+      <p class="subtext">الإصدار 2.0.0 — صُنع بحب لخدمة المسلمين.</p>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav active" onclick="go('homeView',this)"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>الرئيسية</span></div>
+    <div class="nav" onclick="go('azkarView',this)"><svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg><span>الأذكار</span></div>
+    <div class="nav" onclick="go('quranView',this)"><svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg><span>المصحف</span></div>
+    <div class="nav" onclick="go('tasbihView',this)"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><span>المسبحة</span></div>
+    <div class="nav" onclick="go('qiblaView',this)"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg><span>القبلة</span></div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

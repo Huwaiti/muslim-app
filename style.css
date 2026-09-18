@@ -1,0 +1,199 @@
+/* ==========================================================
+   1. Design Tokens & Root Variables
+   ========================================================== */
+:root {
+  --bg: #F0F8F4;
+  --primary: #0D5C46;
+  --primary-light: #157A5E;
+  --gold: #D4AF37;
+  --text: #1E2923;
+  --muted: #5C6E64;
+  --card: #ffffff;
+  --border: #E2E8F0;
+  --shadow: rgba(13, 92, 70, 0.08);
+  --danger: #E53E3E;
+  --radius-s: 14px;
+  --radius-m: 20px;
+  --radius-l: 28px;
+  --radius-full: 999px;
+  --trans-fast: all 0.2s ease;
+  --trans: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --trans-theme: background-color 1.2s ease, color 1.2s ease, border-color 1.2s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body { background: var(--bg); color: var(--text); display: flex; justify-content: center; transition: var(--trans-theme); }
+
+.app { width: 100%; max-width: 480px; min-height: 100vh; display: flex; flex-direction: column; padding-bottom: 80px; }
+
+/* ==========================================================
+   2. Top Bar
+   ========================================================== */
+.top-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: var(--card); border-bottom: 1px solid var(--border); transition: var(--trans-theme); position: sticky; top: 0; z-index: 100; }
+.top-icon { width: 42px; height: 42px; border-radius: 50%; background: var(--bg); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--trans-fast); }
+.top-icon:active { transform: scale(0.9); }
+.top-icon svg { width: 20px; height: 20px; fill: var(--primary); }
+.badge { background: var(--bg); color: var(--primary); padding: 7px 16px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; transition: var(--trans-theme); }
+
+/* ==========================================================
+   3. Views & Layout
+   ========================================================== */
+.view { display: none; padding: 18px; flex: 1; overflow-y: auto; }
+.view.active { display: block; animation: fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.view::-webkit-scrollbar { width: 0; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+.page-title { color: var(--primary); font-size: 24px; margin-bottom: 20px; text-align: center; font-weight: 800; font-family: 'Amiri', serif; }
+
+/* ==========================================================
+   4. Hero Card - New Shape
+   ========================================================== */
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff;
+  border-radius: var(--radius-l);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 20px 45px -12px var(--shadow);
+  margin-bottom: 18px;
+  transition: var(--trans-theme);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before { content: ''; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%); animation: rotateGlow 20s linear infinite; }
+@keyframes rotateGlow { to { transform: rotate(360deg); } }
+.hero-label { font-size: 13px; opacity: 0.9; margin-bottom: 12px; letter-spacing: 1px; position: relative; z-index: 2; }
+.prayer-title { font-family: 'Amiri', serif; font-size: 38px; font-weight: 700; margin-bottom: 10px; position: relative; z-index: 2; }
+.timer { font-size: 34px; font-weight: 800; letter-spacing: 3px; direction: ltr; font-variant-numeric: tabular-nums; position: relative; z-index: 2; }
+
+/* ==========================================================
+   5. Dates Row (Gregorian + Hijri)
+   ========================================================== */
+.dates-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.date-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 14px 12px; display: flex; flex-direction: column; align-items: center; transition: var(--trans-theme); }
+.date-label { font-size: 10px; color: var(--muted); font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
+.date-val { font-size: 13px; color: var(--primary); font-weight: 700; text-align: center; }
+
+/* ==========================================================
+   6. Prayer Grid
+   ========================================================== */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.p-item { background: var(--card); padding: 16px; border-radius: var(--radius-m); display: flex; justify-content: space-between; align-items: center; border: 1.5px solid var(--border); font-size: 14px; transition: var(--trans); position: relative; overflow: hidden; }
+.p-item::after { content: ''; position: absolute; right: 0; top: 0; height: 100%; width: 4px; background: transparent; transition: var(--trans); }
+.p-item.next { border-color: var(--gold); background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent); }
+.p-item.next::after { background: var(--gold); }
+.p-item .t { font-weight: 800; color: var(--primary); direction: ltr; font-size: 15px; }
+
+/* ==========================================================
+   7. Azkar
+   ========================================================== */
+.tabs { display: flex; gap: 10px; margin-bottom: 16px; }
+.tab { flex: 1; padding: 13px; border: 1.5px solid var(--border); background: var(--card); color: var(--muted); border-radius: var(--radius-m); cursor: pointer; font-family: inherit; font-weight: 700; font-size: 13px; transition: var(--trans); }
+.tab.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 8px 20px -6px var(--shadow); }
+.azkar-item { background: var(--card); padding: 20px; border-radius: var(--radius-m); margin-bottom: 12px; border-right: 4px solid var(--gold); cursor: pointer; border-top: 1px solid var(--border); border-left: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: var(--trans-fast); }
+.azkar-item:active { transform: scale(0.98); }
+.azkar-item.done { opacity: 0.5; border-right-color: var(--primary); }
+.azkar-text { font-size: 15.5px; line-height: 2; margin-bottom: 12px; }
+.azkar-count { display: inline-block; background: var(--bg); padding: 5px 14px; border-radius: var(--radius-full); font-size: 12px; color: var(--primary); font-weight: 800; }
+
+/* ==========================================================
+   8. Tasbih - New 3D Look
+   ========================================================== */
+.tasbih-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; }
+.tasbih-circle {
+  width: 230px; height: 230px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--primary-light), var(--primary) 70%);
+  color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 68px; font-weight: 900;
+  box-shadow: 0 25px 50px -10px var(--shadow), inset 0 -8px 25px rgba(0,0,0,0.25), inset 0 5px 15px rgba(255,255,255,0.15);
+  cursor: pointer; margin: 30px 0;
+  user-select: none;
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.tasbih-circle::after { content: ''; position: absolute; inset: -15px; border-radius: 50%; border: 2px dashed var(--gold); opacity: 0.4; animation: rotateGlow 30s linear infinite; }
+.tasbih-circle:active { transform: scale(0.93); }
+
+/* ==========================================================
+   9. Buttons
+   ========================================================== */
+.btn-reset { padding: 12px 30px; background: transparent; border: 1.5px solid var(--muted); color: var(--muted); border-radius: var(--radius-full); cursor: pointer; font-family: inherit; font-weight: 700; font-size: 14px; transition: var(--trans-fast); }
+.btn-reset:active { transform: scale(0.95); }
+.btn-save { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; border: none; border-radius: var(--radius-m); font-family: inherit; font-weight: 800; font-size: 15px; cursor: pointer; margin-top: 10px; transition: var(--trans-fast); box-shadow: 0 10px 20px -5px var(--shadow); }
+.btn-save:active { transform: scale(0.97); }
+.btn-row { display: flex; gap: 10px; margin-top: 10px; }
+.btn-row .btn-save, .btn-row .btn-reset { flex: 1; }
+
+/* ==========================================================
+   10. Qibla Compass
+   ========================================================== */
+.qibla-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 75vh; }
+.compass { width: 280px; height: 280px; border-radius: 50%; background: var(--card); display: flex; justify-content: center; align-items: center; margin: 30px 0; position: relative; box-shadow: 0 25px 60px -15px var(--shadow), inset 0 5px 20px rgba(0,0,0,0.05); }
+.compass-ring { position: absolute; inset: 10px; border-radius: 50%; border: 3px dashed var(--gold); opacity: 0.5; animation: rotateGlow 40s linear infinite; }
+.compass::before { content: 'N'; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); font-weight: 900; color: var(--primary); font-size: 16px; }
+.compass::after { content: 'S'; position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); font-weight: 900; color: var(--muted); font-size: 14px; }
+.needle { font-size: 110px; color: var(--primary); transition: transform 0.25s ease-out; line-height: 1; filter: drop-shadow(0 6px 12px var(--shadow)); }
+.q-deg { background: var(--card); padding: 14px 28px; border-radius: var(--radius-m); border: 1px solid var(--border); font-weight: 800; color: var(--primary); transition: var(--trans-theme); font-size: 14px; }
+
+/* ==========================================================
+   11. Quran
+   ========================================================== */
+.surah-item { background: var(--card); padding: 16px 20px; border-radius: var(--radius-m); margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); transition: var(--trans-fast); }
+.surah-item:active { transform: scale(0.98); background: var(--bg); }
+.s-num { width: 36px; height: 36px; background: var(--bg); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; margin-left: 12px; }
+.s-name { flex: 1; font-weight: 700; font-size: 15px; color: var(--text); }
+.ayah { background: var(--card); padding: 20px; border-radius: var(--radius-m); margin-bottom: 12px; border-right: 4px solid var(--gold); line-height: 2.4; font-size: 19px; font-family: 'Amiri', serif; border-top: 1px solid var(--border); border-left: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: var(--trans-theme); }
+.ayah-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--bg); color: var(--primary); border-radius: 50%; font-size: 12px; font-weight: 800; margin-right: 8px; font-family: 'Tajawal', sans-serif; }
+
+/* ==========================================================
+   12. Profile
+   ========================================================== */
+.profile-head { text-align: center; padding: 30px 0 20px; }
+.avatar { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; font-size: 46px; font-weight: 900; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; box-shadow: 0 15px 35px -10px var(--shadow); font-family: 'Amiri', serif; position: relative; }
+.avatar::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px dashed var(--gold); opacity: 0.5; animation: rotateGlow 25s linear infinite; }
+#pName { color: var(--primary); font-size: 22px; margin-bottom: 6px; font-weight: 800; }
+.subtext { color: var(--muted); font-size: 13px; }
+.stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 25px 0; }
+.stat { background: var(--card); padding: 18px 8px; border-radius: var(--radius-m); text-align: center; border: 1px solid var(--border); transition: var(--trans-theme); }
+.stat-n { font-size: 26px; font-weight: 900; color: var(--primary); }
+.stat-l { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 600; }
+.logout { width: 100%; padding: 15px; background: transparent; border: 1.5px solid var(--danger); color: var(--danger); border-radius: var(--radius-m); font-family: inherit; font-weight: 800; font-size: 15px; cursor: pointer; margin-top: 10px; transition: var(--trans-fast); }
+.logout:active { background: var(--danger); color: #fff; }
+
+/* ==========================================================
+   13. Settings
+   ========================================================== */
+.s-section { background: var(--card); padding: 22px; border-radius: var(--radius-l); margin-bottom: 16px; border: 1px solid var(--border); transition: var(--trans-theme); }
+.s-section h3 { color: var(--primary); font-size: 16px; margin-bottom: 16px; font-weight: 800; }
+.input-g { margin-bottom: 14px; }
+.input-g label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; font-weight: 700; }
+.input-g input, .input-g select { width: 100%; padding: 14px; border: 1.5px solid var(--border); border-radius: var(--radius-s); font-family: inherit; font-size: 14px; background: var(--bg); color: var(--text); outline: none; transition: var(--trans-fast); }
+.input-g input:focus, .input-g select:focus { border-color: var(--primary); }
+.toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 14px; font-weight: 600; }
+.toggle-row:last-child { border-bottom: none; }
+.switch { position: relative; display: inline-block; width: 50px; height: 28px; flex-shrink: 0; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; inset: 0; background: #ccc; border-radius: 28px; transition: 0.3s; }
+.slider::before { content: ''; position: absolute; height: 22px; width: 22px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+.switch input:checked + .slider { background: var(--primary); }
+.switch input:checked + .slider::before { transform: translateX(22px); }
+
+/* ==========================================================
+   14. Bottom Navigation
+   ========================================================== */
+.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 72px; background: var(--card); display: flex; border-top: 1px solid var(--border); z-index: 50; transition: var(--trans-theme); box-shadow: 0 -10px 30px -10px rgba(0,0,0,0.05); }
+.nav { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 10px; color: var(--muted); cursor: pointer; transition: var(--trans-fast); font-weight: 700; position: relative; }
+.nav svg { width: 23px; height: 23px; fill: currentColor; transition: var(--trans-fast); }
+.nav.active { color: var(--primary); }
+.nav.active svg { transform: translateY(-4px) scale(1.15); }
+.nav.active::before { content: ''; position: absolute; top: 0; width: 30%; height: 3px; background: var(--primary); border-radius: 0 0 5px 5px; }
+
+/* ==========================================================
+   15. Loading & Dark Mode
+   ========================================================== */
+.loading { text-align: center; color: var(--muted); padding: 40px 20px; font-size: 14px; font-weight: 600; }
+
+body.dark { --bg: #0F1419; --card: #1A1F26; --text: #E8EAED; --muted: #8A929C; --border: #2A3038; --shadow: rgba(0,0,0,0.3); }
+body.dark .hero { background: linear-gradient(135deg, #1E3A5F, #2C5282); }
